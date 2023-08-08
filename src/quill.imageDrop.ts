@@ -68,17 +68,19 @@ export class ImageDrop {
   }
 
   private async handlePaste(evt: ClipboardEvent) {
-    const files = Array.from(evt?.clipboardData?.items || []);
-    this.logger.log("handlePaste", { files, evt });
-    const images = files.filter(f => IsMatch(f.type));
-    this.logger.log("handlePaste", { images, evt });
-    if (!images.length) {
+    const items = Array.from(evt?.clipboardData?.items || []);
+    this.logger.log("handlePaste", { items, evt });
+
+    // Text pasted from word may contain text and images
+    const richTextItems = items.filter(f => (f.type === 'text/html' || f.type === 'text/rtf' || f.type === 'text/plain' ));
+    if (richTextItems.length) {
+      this.logger.log("handlePaste also detected html/plain/rtf");
       return;
     }
-    // Text pasted from word will contain both text/html and image/png.
-    const imagesNoHtml = images.filter(f => f.type !== 'text/html');
-    if (!imagesNoHtml.length) {
-      this.logger.log("handlePaste also detected html");
+    
+    const images = items.filter(f => IsMatch(f.type));
+    this.logger.log("handlePaste", { images, evt });
+    if (!images.length) {
       return;
     }
     evt.preventDefault();

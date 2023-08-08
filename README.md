@@ -7,7 +7,7 @@
 ![Build and Publish](https://github.com/benwinding/quill-image-compress/workflows/Build%20and%20Publish/badge.svg)
 <!-- [END badges] -->
 
-Quill.js Module which compresses images that are uploaded to the editor
+Modified Quill.js Module to compresses images that are uploaded to the editor
 
 - [Live Demo!](https://benwinding.github.io/quill-image-compress/src/demo.html)
 - [Live Demo! (with script tag)](https://benwinding.github.io/quill-image-compress/src/demo-script-tag.html)
@@ -19,13 +19,20 @@ Quill.js Module which compresses images that are uploaded to the editor
 
 - Will compress image when:
   - Drag/Dropped into quill
-  - Pasted into quill
+  - Pasted into quill (See below: Modified behavior for a Chrome issue to fix Copy/Paste from Word where TEXT is converted to IMAGE and compressed) 
   - Clicked image load button
 - Handles most image formats a browser can read:
   - `gif|jpeg|png|svg|webp|bmp|vnd`
 - Compression options [more info](#options)
 
 _NOTE: :exclamation:you don't need `quill-image-drop-module`, it's included in this package:exclamation:_
+
+BUG FIX: Modified behavior for a Chrome issue to fix Copy/Paste from Word where TEXT is converted to compressed image.
+
+QuillJS in 2018 made a fix to handle pasting of RichText [See bypass uploader if clipboardData has rich text #2227](https://github.com/quilljs/quill/pull/2227/commits/f9e93943a40eb0134eb7a3ed08942ebf20bad82a)
+
+When QuillJS includs the imageCompress plugin, we experience the issue of TEXT being converted to compressed IMAGE. 
+This version excludes RichText from being imageCompressed re-enabling COPY/PASTE of TEXT from WORD. Default behavior remains i.e. compress pasted images.
 
 ## Quickstart
 
@@ -112,4 +119,4 @@ const quill = new Quill(editor, {
   - Displays console logs: true/false
 
 ## Thanks
-This project is based on [quill-image-uploader](https://github.com/NoelOConnell/quill-image-uploader), thanks mate!
+This project is based on [quill-image-compress](https://github.com/benwinding/quill-image-compress)
