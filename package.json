@@ -1,6 +1,6 @@
 {
 	"name": "quill-image-compress",
-	"description": "A Quill rich text editor Module which compresses images uploaded to the editor",
+	"description": "A modified Quill rich text editor Module which compresses images uploaded to the editor",
 	"version": "1.2.3",
 	"main": "dist/quill.imageCompressor.min.js",
 	"types": "types/index.d.ts",
@@ -12,7 +12,8 @@
 		"watch": "webpack --watch --progress --mode development",
 		"start": "webpack-dev-server --hot --port 8001 --mode development",
 		"build-dev": "webpack --mode development",
-		"build": "webpack --mode production"
+		"build": "webpack --mode production",
+		"prepare": "webpack --mode production"
 	},
 	"files": [
 		"src/*.html",
